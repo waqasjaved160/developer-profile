@@ -1,9 +1,16 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url, include
+from django.views.generic import TemplateView
+from rest_framework import routers
 
-from thinkster_django_angular_boilerplate.views import IndexView
+from authentication.views import UserViewSet
 
-urlpatterns = patterns(
-    '',
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
 
-    url('^.*$', IndexView.as_view(), name='index'),
-)
+urlpatterns = [
+
+    url(r'^api/v1/', include(router.urls)),
+    # url('^.*$', TemplateView.as_view(template_name='index.html'), name='index'),
+]
+
+# urlpatterns += router.urls

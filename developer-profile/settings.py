@@ -1,5 +1,5 @@
 """
-Django settings for thinkster_django_angular_boilerplate project.
+Django settings for developer profile project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -38,6 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'compressor',
+
+    'authentication',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,6 +56,7 @@ ROOT_URLCONF = 'developer-profile.urls'
 
 WSGI_APPLICATION = 'developer-profile.wsgi.application'
 
+AUTH_USER_MODEL = 'authentication.User'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -98,9 +101,21 @@ STATICFILES_FINDERS = (
 
 COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
